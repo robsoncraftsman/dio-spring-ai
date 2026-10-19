@@ -8,7 +8,11 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -20,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
+@Sql("classpath:test-data.sql")
 class DespesaControllerTest {
 
     @Autowired
@@ -32,7 +38,7 @@ class DespesaControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is("956f6256-d76f-442b-ae21-2052d30ca98b")))
                 .andExpect(jsonPath("$[0].descricao", is("Abastecimento")))
-                .andExpect(jsonPath("$[0].valor", is(190)))
+                .andExpect(jsonPath("$[0].valor", is(190.0)))
                 .andExpect(jsonPath("$[0].categoria", is("Transporte")));
     }
 

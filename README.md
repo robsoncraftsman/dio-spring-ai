@@ -13,6 +13,10 @@ retornado um áudio em MP3 descrevendo a operação realizada.
 2. Execute o comando abaixo:
 > ./mvnw spring-boot:run
 
+## APIs - Swagger / OpenAPI
+
+http://localhost:8080/swagger-ui/index.html
+
 ## Tecnologias utilizadas
 
 - Spring Boot 4

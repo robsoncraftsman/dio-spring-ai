@@ -2,6 +2,7 @@ package com.robsoncraftsman.dio.spring.ai.despesa.application;
 
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.Categoria;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.Despesa;
+import com.robsoncraftsman.dio.spring.ai.despesa.domain.DespesaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -11,13 +12,14 @@ import java.util.UUID;
 @Service
 public class ConsultarTodasDespesasUseCase {
 
+    private final DespesaRepository despesaRepository;
+
+    public ConsultarTodasDespesasUseCase(DespesaRepository despesaRepository) {
+        this.despesaRepository = despesaRepository;
+    }
+
     public List<Despesa> execute() {
-        var despesa = new Despesa();
-        despesa.setId(UUID.fromString("956f6256-d76f-442b-ae21-2052d30ca98b"));
-        despesa.setDescricao("Abastecimento");
-        despesa.setValor(BigDecimal.valueOf(190));
-        despesa.setCategoria(Categoria.TRANSPORTE);
-        return List.of(despesa);
+        return despesaRepository.findAll();
     }
 
 }
