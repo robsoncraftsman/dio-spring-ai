@@ -1,16 +1,20 @@
 package com.robsoncraftsman.dio.spring.ai.prompt;
 
 import com.robsoncraftsman.dio.spring.ai.TestcontainersConfiguration;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.openai.OpenAiAudioTranscriptionModel;
 import org.springframework.ai.openai.OpenAiAudioTranscriptionOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -22,20 +26,14 @@ class StructuredOutputTest {
     private OpenAiAudioTranscriptionModel transcriptionModel;
     @Autowired
     private ChatClient.Builder chatClientBuilder;
+    @Value("classpath:prompt/transcricao_audio_despesa.md")
+    private Resource promptTranscricaoAudioDespesaResource;
+    @Value("classpath:prompt/processamento_texto_despesa.md")
+    private Resource promptProcessamentoTextoDespesaResource;
 
     @Test
-    void deve_interpretar_texto_corretamente() {
-        var transcriptionPrompt = """ 
-                  Áudio em português brasileiro.
-                  
-                  Áudio contém descrição de gastos financeiros.
-                  
-                  As frases geralmente contêm:
-                   - Uma ação (gastei, paguei, comprei);
-                   - Um valor em reais (número + "reais");
-                   - Um local ou estabelecimento (mercado, farmácia, restaurante, loja, posto de gasolina etc.);
-                """;
-
+    void deve_interpretar_texto_corretamente() throws IOException {
+        var transcriptionPrompt = promptTranscricaoAudioDespesaResource.getContentAsString(StandardCharsets.UTF_8);
         var audio = new ClassPathResource("audio/posto_gasolina.mp3");
         var transcriptionOptions = OpenAiAudioTranscriptionOptions.builder().prompt(transcriptionPrompt).build();
         var audioTranscriptionPrompt = new AudioTranscriptionPrompt(audio, transcriptionOptions);
@@ -47,19 +45,7 @@ class StructuredOutputTest {
         assertThat(output).contains("Gastei duzentos reais no posto de gasolina");
         System.out.println(output);
 
-        var systemPrompt = """
-                Você é interpretador de texto.
-                Você irá receber como entrada um texto referente a um pagamento de uma despesa financeira.
-                
-                A frase geralmente contêm:
-                   - Uma ação (gastei, paguei, comprei);
-                   - Um valor em reais (número + "reais");
-                   - Um local ou estabelecimento (mercado, farmácia, restaurante, loja, posto de gasolina etc.);
-                   
-                Extraia do texto o valor e o local da despesa.
-                Categorize o tipo de despesas conforme uma das seguintes opções: Moradia, Alimentação, Transporte,
-                Saúde, Educação, Lazer, Outros.
-                """;
+        var systemPrompt = promptProcessamentoTextoDespesaResource.getContentAsString(StandardCharsets.UTF_8);
         var chatClient = chatClientBuilder
                 .defaultSystem(systemPrompt)
                 .build();
