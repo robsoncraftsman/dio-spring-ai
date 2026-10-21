@@ -26,5 +26,12 @@ http://localhost:8080/swagger-ui/index.html
 - Postgres 18
 - Docker Compose
 
+## Referências
+
+Repositório Com Todos Os Conteúdos Sobre Spring:
+https://github.com/digitalinnovationone/dio-spring-boot-learning-track
+
+Pasta Com Detalhes Sobre O Projeto Final:
+https://github.com/digitalinnovationone/dio-spring-boot-learning-track/blob/main/05-spring-ai/README.md
 
 
