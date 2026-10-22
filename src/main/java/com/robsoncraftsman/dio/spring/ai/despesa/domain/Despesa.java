@@ -14,7 +14,7 @@ public class Despesa {
     @Id
     @GeneratedValue
     private UUID id;
-    private String descricao;
+    private String local;
     private BigDecimal valor;
     private Categoria categoria;
 
@@ -26,12 +26,12 @@ public class Despesa {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getLocal() {
+        return local;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setLocal(String descricao) {
+        this.local = descricao;
     }
 
     public BigDecimal getValor() {
@@ -65,7 +65,7 @@ public class Despesa {
     public String toString() {
         return "Despesa{" +
                 "id=" + id +
-                ", descricao='" + descricao + '\'' +
+                ", local='" + local + '\'' +
                 ", valor=" + valor +
                 ", categoria=" + categoria +
                 '}';

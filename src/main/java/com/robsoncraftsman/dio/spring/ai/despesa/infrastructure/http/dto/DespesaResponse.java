@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public record DespesaResponse(UUID id, String descricao, BigDecimal valor, Categoria categoria) {
+public record DespesaResponse(UUID id, String local, BigDecimal valor, Categoria categoria) {
 
     public static DespesaResponse from(Despesa despesa) {
-        return new DespesaResponse(despesa.getId(), despesa.getDescricao(), despesa.getValor(), despesa.getCategoria());
+        return new DespesaResponse(despesa.getId(), despesa.getLocal(), despesa.getValor(), despesa.getCategoria());
     }
 
     public static List<DespesaResponse> from(List<Despesa> despesas) {
