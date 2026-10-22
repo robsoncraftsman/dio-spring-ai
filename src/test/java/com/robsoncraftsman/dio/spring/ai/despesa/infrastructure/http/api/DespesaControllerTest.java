@@ -35,7 +35,7 @@ class DespesaControllerTest {
                 .andExpect(jsonPath("$[0].id", is("956f6256-d76f-442b-ae21-2052d30ca98b")))
                 .andExpect(jsonPath("$[0].local", is("Abastecimento de gasolina")))
                 .andExpect(jsonPath("$[0].valor", is(190.0)))
-                .andExpect(jsonPath("$[0].categoria", is("Transporte")));
+                .andExpect(jsonPath("$[0].categoria", is("TRANSPORTE")));
     }
 
 }
