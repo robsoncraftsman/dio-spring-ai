@@ -3,6 +3,7 @@ package com.robsoncraftsman.dio.spring.ai.despesa.application;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.Categoria;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.Despesa;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.DespesaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.openai.OpenAiAudioTranscriptionModel;
@@ -14,16 +15,16 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 @Service
+@Transactional
 public class CadastrarDespesaPeloAudioUseCase {
 
-    private OpenAiAudioTranscriptionModel transcriptionModel;
-    private ChatClient.Builder chatClientBuilder;
-    private Resource promptTranscricaoAudioDespesaResource;
-    private Resource promptProcessamentoTextoDespesaResource;
-    private DespesaRepository despesaRepository;
+    private final OpenAiAudioTranscriptionModel transcriptionModel;
+    private final ChatClient.Builder chatClientBuilder;
+    private final Resource promptTranscricaoAudioDespesaResource;
+    private final Resource promptProcessamentoTextoDespesaResource;
+    private final DespesaRepository despesaRepository;
 
     public CadastrarDespesaPeloAudioUseCase(OpenAiAudioTranscriptionModel transcriptionModel, ChatClient.Builder chatClientBuilder,
                                             @Value("classpath:prompt/transcricao_audio_despesa.md") Resource promptTranscricaoAudioDespesaResource,

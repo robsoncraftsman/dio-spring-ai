@@ -1,1 +1,0 @@
-insert into despesa (id, local, valor, categoria) values ('956f6256-d76f-442b-ae21-2052d30ca98b', 'Abastecimento de gasolina', 190, 2);

@@ -1,15 +1,14 @@
 package com.robsoncraftsman.dio.spring.ai.despesa.application;
 
-import com.robsoncraftsman.dio.spring.ai.despesa.domain.Categoria;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.Despesa;
 import com.robsoncraftsman.dio.spring.ai.despesa.domain.DespesaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
+@Transactional
 public class ConsultarTodasDespesasUseCase {
 
     private final DespesaRepository despesaRepository;
